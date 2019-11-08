@@ -1,0 +1,44 @@
+//- player-info.pug
+include ../partials/header.pug
+include ../partials/menu.pug
+
+div.container
+  br
+  div.row
+    div.col-4
+      div.card
+        if(result2)
+          -var image_src = result2.img_src
+        else
+          -var image_src = '../../resources/img/helmet.jpg'
+        img.card-img-top#player_img(src= image_src, alt="Football Player")
+        div.card-body.mx-auto
+          form.form(action="/home/player_info/post/", method="get")
+            select.custom-select(name="player_choice", onchange="this.form.submit()")
+              option(selected) Select Player
+              if(result1)
+                for item in result1
+                  option(value=item.id)=item.name
+    div.col-8
+      div.table-responsive
+        table.table
+        if(result2)
+          tr
+            th Year
+            td #{result2.year}
+          tr
+            th Major
+            td #{result2.major}
+          tr
+            th Games Played
+            td #{gameCount}
+          tr
+            td Passing Yards: #{result2.passing_yards}
+            td Avg. Passing Yards: #{Math.round(result2.passing_yards/gameCount)}
+          tr
+            td Rushing Yards: #{result2.rushing_yards}
+            td Avg. Rushing Yards: #{Math.round(result2.rushing_yards/gameCount)}
+          tr
+            td Receiving Yards: #{result2.receiving_yards}
+            td Avg. Receiving Yards: #{Math.round(result2.receiving_yards/gameCount)}
+include ../partials/footer.pug
